@@ -7,6 +7,7 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import { CartProvider } from '@/contexts/CartContext'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ReviewsSection from '@/components/ReviewsSection'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import PageTransition from '@/components/PageTransition'
 import WelcomeLoader from '@/components/WelcomeLoader'
@@ -95,6 +96,7 @@ function App() {
                   </Routes>
                 </PageTransition>
               </main>
+              <ReviewsSection />
               <Footer />
             </div>
           </Router>

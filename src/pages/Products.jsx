@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { ShoppingCart, Eye } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 import { toast } from 'sonner'
+import { getProducts } from '@/data/products'
 
 const Products = () => {
   const [products, setProducts] = useState([])
@@ -22,27 +23,10 @@ const Products = () => {
     try {
       setLoading(true)
       setError(null)
-      
-      let url = '/products'
-      const params = new URLSearchParams()
-      
-      if (category) params.append('category', category)
-      if (filter === 'rental') params.append('is_rentable', 'true')
-      
-      if (params.toString()) {
-        url += `?${params.toString()}`
-      }
-      
-      const { api } = await import('@/lib/api')
-      const response = await api.get(url + (params.toString() ? `?${params.toString()}` : ''))
-      const data = response.data
-      
-      console.log('Products data:', data) // Debug: lihat struktur data
-      console.log('First product images:', data.data?.[0]?.images) // Debug: lihat struktur images
-      setProducts(data.data || [])
+      const items = getProducts({ category, isRentable: filter === 'rental' })
+      setProducts(items)
     } catch (err) {
-      setError(err.message)
-      console.error('Error fetching products:', err)
+      setError('Gagal memuat produk')
     } finally {
       setLoading(false)
     }
@@ -71,7 +55,7 @@ const Products = () => {
     const imageAlt = product.images?.[0]?.alt || product.name
 
     return (
-      <div className="group bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300">
+      <div className="group bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 flex flex-col h-full">
         <div className="aspect-square bg-gray-100 overflow-hidden relative">
           <img
             src={imageUrl}
@@ -83,33 +67,33 @@ const Products = () => {
           />
         </div>
         
-        <div className="p-6">
+        <div className="p-6 flex flex-col grow">
           <div className="mb-2">
             <span className="text-xs text-gray-500 uppercase tracking-wide">
               {product.category?.name || 'Kain Tenun'}
             </span>
           </div>
           
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <h3 className="text-lg font-medium text-gray-900 mb-2 line-clamp-2 min-h-[48px]">
             {product.name}
           </h3>
           
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-[40px]">
             {product.short_description}
           </p>
           
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xl font-medium text-gray-900">
+          <div className="mb-4 mt-auto">
+            <span className="text-xl font-medium text-gray-900 block">
               {formatPrice(product.price)}
             </span>
             {product.is_rentable && product.rent_price && (
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-500 block mt-1">
                 Sewa: {formatPrice(product.rent_price)}/hari
               </span>
             )}
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-4">
             <Link to={`/product/${product.slug}`} className="flex-1">
               <button className="w-full border border-gray-300 text-gray-700 hover:bg-gray-50 py-2 text-sm transition-colors">
                 Detail

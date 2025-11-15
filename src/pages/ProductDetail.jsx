@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { ShoppingCart, ArrowLeft, Star, Info } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 import { toast } from 'sonner'
+import { getProductBySlug } from '@/data/products'
 
 const ProductDetail = () => {
   const { slug } = useParams()
@@ -21,14 +22,11 @@ const ProductDetail = () => {
     try {
       setLoading(true)
       setError(null)
-      
-      const { api } = await import('@/lib/api')
-      const response = await api.get(`/products/${slug}`)
-      const data = response.data
-      setProduct(data.data)
-      // Set default variant if available
-      if (data.data?.variants?.length > 0) {
-        setSelectedVariant(data.data.variants[0])
+      const item = getProductBySlug(slug)
+      if (!item) throw new Error('Produk tidak ditemukan')
+      setProduct(item)
+      if (item?.variants?.length > 0) {
+        setSelectedVariant(item.variants[0])
       }
     } catch (err) {
       setError(err.message)

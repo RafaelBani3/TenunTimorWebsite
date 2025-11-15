@@ -11,12 +11,11 @@ const Header = () => {
   const cartItemCount = getCartItemCount()
 
   const isActive = (path) => {
-    // Handle query parameters for rental filter
     if (path.includes('?')) {
       const [pathname, search] = path.split('?')
       return location.pathname === pathname && location.search === `?${search}`
     }
-    return location.pathname === path
+    return location.pathname === path && location.search === ''
   }
 
   const navigation = [
