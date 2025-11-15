@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Welcome Animation</title>
+</head>
+<body>
+    <h1>Clear LocalStorage untuk Test Welcome Animation</h1>
+    <button onclick="clearStorage()">Clear LocalStorage</button>
+    <button onclick="openSite()">Buka Website</button>
+    <p id="status"></p>
+
+    <script>
+        function clearStorage() {
+            localStorage.removeItem('tenuntimor-welcome-shown');
+            document.getElementById('status').textContent = 'LocalStorage cleared! Silakan buka website.';
+        }
+
+        function openSite() {
+            window.open('http://localhost:3002/', '_blank');
+        }
+
+        // Check current status
+        const hasVisited = localStorage.getItem('tenuntimor-welcome-shown');
+        document.getElementById('status').textContent = hasVisited 
+            ? 'Welcome sudah pernah ditampilkan. Klik "Clear LocalStorage" untuk test lagi.' 
+            : 'Welcome belum pernah ditampilkan. Silakan buka website.';
+    </script>
+</body>
+</html>
