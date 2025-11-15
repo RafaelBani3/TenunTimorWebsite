@@ -1,7 +1,15 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/sanctum/(.*)",
+      "destination": "/sanctum/$1"
+    },
+    {
+      "source": "/((?!api|sanctum).*)",
       "destination": "/index.html"
     }
   ],

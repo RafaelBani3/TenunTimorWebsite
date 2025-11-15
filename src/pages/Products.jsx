@@ -23,7 +23,7 @@ const Products = () => {
       setLoading(true)
       setError(null)
       
-      let url = '/api/products'
+      let url = '/products'
       const params = new URLSearchParams()
       
       if (category) params.append('category', category)
@@ -33,19 +33,9 @@ const Products = () => {
         url += `?${params.toString()}`
       }
       
-      // Use the configured axios instance instead of direct fetch
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-      })
-      
-      if (!response.ok) throw new Error('Failed to fetch products')
-      
-      const data = await response.json()
+      const { api } = await import('@/lib/api')
+      const response = await api.get(url + (params.toString() ? `?${params.toString()}` : ''))
+      const data = response.data
       
       console.log('Products data:', data) // Debug: lihat struktur data
       console.log('First product images:', data.data?.[0]?.images) // Debug: lihat struktur images

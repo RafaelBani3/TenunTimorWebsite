@@ -22,10 +22,9 @@ const ProductDetail = () => {
       setLoading(true)
       setError(null)
       
-      const response = await fetch(`/api/products/${slug}`)
-      if (!response.ok) throw new Error('Produk tidak ditemukan')
-      
-      const data = await response.json()
+      const { api } = await import('@/lib/api')
+      const response = await api.get(`/products/${slug}`)
+      const data = response.data
       setProduct(data.data)
       // Set default variant if available
       if (data.data?.variants?.length > 0) {
