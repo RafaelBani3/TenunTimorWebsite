@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Carousel from '@/components/Carousel'
+import { Star } from 'lucide-react'
 import { useScrollAnimation, scrollAnimationClasses } from '@/hooks/useScrollAnimation'
 
 const Home = () => {
@@ -12,6 +13,16 @@ const Home = () => {
   const feature1Animation = useScrollAnimation()
   const feature2Animation = useScrollAnimation()
   const feature3Animation = useScrollAnimation()
+  const reviews = [
+    { name: 'Rina', photo: 'https://i.pravatar.cc/80?img=32', text: 'Kainnya autentik dan kualitasnya sangat bagus. Cocok untuk acara resmi.' },
+    { name: 'Andi', photo: 'https://i.pravatar.cc/80?img=12', text: 'Motifnya unik, terasa budaya Timor yang kuat. Pengiriman cepat!' },
+    { name: 'Maya', photo: 'https://i.pravatar.cc/80?img=45', text: 'Sangat puas, bahan lembut dan nyaman. Warna alami terlihat elegan.' },
+    { name: 'Budi', photo: 'https://i.pravatar.cc/80?img=7', text: 'Pernah sewa untuk lamaran, tampilannya mewah sekali. Recommended.' },
+    { name: 'Sinta', photo: 'https://i.pravatar.cc/80?img=31', text: 'Detail tenunnya luar biasa. Cocok jadi koleksi pribadi.' },
+    { name: 'Eka', photo: 'https://i.pravatar.cc/80?img=22', text: 'Pelayanan ramah, produk berkualitas. Akan beli lagi.' },
+    { name: 'Dian', photo: 'https://i.pravatar.cc/80?img=50', text: 'Harga sebanding dengan kualitas. Foto asli bahkan lebih cantik.' },
+    { name: 'Yudi', photo: 'https://i.pravatar.cc/80?img=15', text: 'Sewa untuk acara adat, semua tamu memuji. Terima kasih!' }
+  ]
 
   return (
     <div className="min-h-screen bg-white">
@@ -164,6 +175,63 @@ const Home = () => {
                   Sewa Tenun
                 </button>
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-light text-gray-900 mb-2">Apa Kata Mereka</h2>
+            <p className="text-gray-600">Testimoni pelanggan tentang keindahan dan kualitas Tenun Timor</p>
+          </div>
+
+          <div className="space-y-8">
+            <div className="auto-slider mask-fade pause-on-hover">
+              <div className="auto-slider-track reverse" style={{ animationDuration: '30s' }}>
+                {[...reviews, ...reviews].map((r, i) => (
+                  <div key={`row1-${i}`} className="inline-flex items-center bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm flex-shrink-0 min-w-[18rem]">
+                    <img src={r.photo} alt={r.name} className="h-12 w-12 rounded-full object-cover mr-4" />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-medium text-gray-900">{r.name}</span>
+                        <div className="flex items-center text-yellow-500">
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                        </div>
+                      </div>
+                      <div className="text-sm text-gray-600 leading-relaxed">{r.text}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="auto-slider mask-fade pause-on-hover">
+              <div className="auto-slider-track" style={{ animationDuration: '34s' }}>
+                {[...reviews.slice().reverse(), ...reviews.slice().reverse()].map((r, i) => (
+                  <div key={`row2-${i}`} className="inline-flex items-center bg-gray-50 border border-gray-200 rounded-2xl px-6 py-4 shadow-sm flex-shrink-0 min-w-[18rem]">
+                    <img src={r.photo} alt={r.name} className="h-12 w-12 rounded-full object-cover mr-4" />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-medium text-gray-900">{r.name}</span>
+                        <div className="flex items-center text-yellow-500">
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                          <Star className="h-3 w-3 fill-current" />
+                        </div>
+                      </div>
+                      <div className="text-sm text-gray-600 leading-relaxed">{r.text}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
